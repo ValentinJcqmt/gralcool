@@ -35,7 +35,7 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 
     return [
         'name' => $faker->company,
-        'id_type' => factory(App\PlaceType::class)->create()->id,
+        'type_id' => factory(App\PlaceType::class)->create()->id,
         'lat' => $faker->latitude,
         'lng' => $faker->longitude,
     ];
@@ -45,8 +45,8 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 $factory->define(App\Visit::class, function (Faker\Generator $faker) use ($factory) {
 
     return [
-        'id_user' => factory(App\User::class)->create()->id,
-        'id_place' => factory(App\Place::class)->create()->id,
+        'user_id' => factory(App\User::class)->create()->id,
+        'place_id' => factory(App\Place::class)->create()->id,
         'date' => $faker->year.'-'.$faker->month.'-'.$faker->dayOfMonth,
     ];
 });
@@ -55,7 +55,7 @@ $factory->define(App\Visit::class, function (Faker\Generator $faker) use ($facto
 $factory->define(App\Note::class, function (Faker\Generator $faker) use ($factory) {
 
     return [
-        'id_visit' => factory(App\Visit::class)->create()->id,
+        'visit_id' => factory(App\Visit::class)->create()->id,
         'n_price' => $faker->randomFloat(1, 0, 20),
         'n_quantity' => $faker->randomFloat(1, 0, 20),
         'n_quality' => $faker->randomFloat(1, 0, 20),
@@ -76,9 +76,9 @@ $factory->define(App\Virtue::class, function (Faker\Generator $faker) use ($fact
 $factory->define(App\PlaceUserVirtue::class, function (Faker\Generator $faker) use ($factory) {
 
     return [
-        'id_virtue' => factory(App\Virtue::class)->create()->id,
-        'id_place' => factory(App\Place::class)->create()->id,
-        'id_user' => factory(App\User::class)->create()->id,
+        'virtue_id' => factory(App\Virtue::class)->create()->id,
+        'place_id' => factory(App\Place::class)->create()->id,
+        'user_id' => factory(App\User::class)->create()->id,
     ];
 });
 

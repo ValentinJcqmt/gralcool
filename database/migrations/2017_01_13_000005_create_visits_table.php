@@ -15,10 +15,10 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->integer('id_place')->unsigned();
-            $table->foreign('id_place')->references('id')->on('places');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('place_id')->unsigned();
+            $table->foreign('place_id')->references('id')->on('places');
             $table->date('date');
             $table->timestamps();
         });

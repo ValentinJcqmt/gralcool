@@ -27,6 +27,6 @@ class PlaceUserVirtue extends Model
      * @var array
      */
     protected $fillable = [
-        'id_virtue', 'id_place', 'id_user',
+        'virtue_id', 'place_id', 'user_id',
     ];
 }

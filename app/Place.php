@@ -20,14 +20,26 @@ class Place extends Model
         return $this->hasMany('App\PlaceUserVirtue');
     }
 
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'id_type', 'lat', 'lng'
+        'name', 'type_id', 'lat', 'lng'
     ];
+
+    public function getAverageNote(){
+        $visits = Visit::with('notes')->where('place_id', '=', $this->id)->get();
+
+        $avgNotes = Array();
+
+        foreach($visits as $visit){
+            array_push($avgNotes, (array_sum($visit->note) / count($visit->note)));
+        }
+
+
+        return (array_sum($avgNotes) / count($avgNotes));
+    }
 
 }

@@ -27,6 +27,6 @@ class Visit extends Model
      * @var array
      */
     protected $fillable = [
-        'id_user', 'id_place', 'date',
+        'user_id', 'place_id', 'date',
     ];
 }

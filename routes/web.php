@@ -28,20 +28,18 @@ Route::get('/note', function () {
     return view('note');
 });
 
-Route::get('/visit', function () {
+Route::get('/visits', function () {
     return view('visit');
 });
 
-Route::get('/visit/ajout', function () {
+Route::get('/visits/add', function () {
     return view('addVisit');
 });
 
-Route::get('/lieux', 'NotesController@getNoteFromPlaces');
+Route::get('/lieux', 'PlaceController@getNoteFromPlaces');
 
-Route::get('/lieu/{id}', function ($id) {
-    return view('place', ['id' => $id]);
-});
+Route::get('/lieux/{id}', 'PlaceController@getPlace');
 
-Route::get('/lieu/ajout', function () {
+Route::get('/lieux/add', function () {
     return view('addPlace');
 });

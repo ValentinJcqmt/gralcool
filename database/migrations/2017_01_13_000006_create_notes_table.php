@@ -15,8 +15,8 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_visit')->unsigned();
-            $table->foreign('id_visit')->references('id')->on('visits');
+            $table->integer('visit_id')->unsigned();
+            $table->foreign('visit_id')->references('id')->on('visits');
             $table->float('n_price', 3, 1);
             $table->float('n_quantity', 3, 1);
             $table->float('n_quality', 3, 1);

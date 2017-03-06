@@ -18,6 +18,6 @@ class Note extends Model
      * @var array
      */
     protected $fillable = [
-        'n_price', 'n_quality', 'n_quantity', 'n_ambiant'
+        'visit_id', 'n_price', 'n_quality', 'n_quantity', 'n_ambiant'
     ];
 }
