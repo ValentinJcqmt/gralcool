@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "Vous... Ne passerez... Pas!"
+AuthUserFile /home/valentinma/gralcool/.htpasswd
+Require valid-user
+DirectoryIndex ./public

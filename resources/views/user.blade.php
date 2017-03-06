@@ -1,0 +1,1 @@
+User @if (isset($id)) {{ $id }} @endif
