@@ -29,4 +29,6 @@ class Visit extends Model
     protected $fillable = [
         'user_id', 'place_id', 'date',
     ];
+
+    protected $guarded = array('id');
 }

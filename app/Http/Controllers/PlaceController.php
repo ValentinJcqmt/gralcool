@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
-    public function getNoteFromPlaces(){
-        $place = Place::find(5);
-        dd($place->getAverageNote());
 
-        return view('places', ['query' => $query]);
+    public function getAllPlaces(){
+        $places = Place::all();
+
+        return view('places', ['places' => $places]);
     }
 
     public function getPlace($id){
-        $place = Place::with('visits');
+        $place = Place::find($id);
         dd($place);
     }
 }

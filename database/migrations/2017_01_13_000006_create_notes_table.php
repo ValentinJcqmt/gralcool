@@ -20,7 +20,8 @@ class CreateNotesTable extends Migration
             $table->float('n_price', 3, 1);
             $table->float('n_quantity', 3, 1);
             $table->float('n_quality', 3, 1);
-            $table->float('n_ambient', 3, 1);
+            $table->float('n_ambiance', 3, 1);
+            $table->float('average', 3, 1);
             $table->timestamps();
         });
     }

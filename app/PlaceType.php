@@ -21,4 +21,6 @@ class PlaceType extends Model
     protected $fillable = [
         'name',
     ];
+
+    protected $guarded = array('id');
 }

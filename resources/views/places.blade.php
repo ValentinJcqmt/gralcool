@@ -2,8 +2,8 @@
 
 @section('content')
 
-    @foreach($query as $data)
-        {{$data->name}}, {{$data->lat}}, {{$data->lng}}, {{$data->note}}
+    @foreach($places as $place)
+        {{$place->getAverageNotes()['average']}}
         <br>
     @endforeach
 

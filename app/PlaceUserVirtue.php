@@ -29,4 +29,6 @@ class PlaceUserVirtue extends Model
     protected $fillable = [
         'virtue_id', 'place_id', 'user_id',
     ];
+
+    protected $guarded = array('id');
 }

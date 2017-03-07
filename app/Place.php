@@ -3,6 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Float_;
+use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Expr\Cast\Int_;
 
 class Place extends Model
 {
@@ -29,17 +33,51 @@ class Place extends Model
         'name', 'type_id', 'lat', 'lng'
     ];
 
-    public function getAverageNote(){
-        $visits = Visit::with('notes')->where('place_id', '=', $this->id)->get();
+    protected $guarded = array('id');
 
-        $avgNotes = Array();
 
-        foreach($visits as $visit){
-            array_push($avgNotes, (array_sum($visit->note) / count($visit->note)));
+
+    /**
+     * @return array
+     */
+    public function getAverageNotes(){
+
+        $visits = Visit::where('place_id', '=', $this->id)->with('notes')->get();
+
+        $avg = [
+            'n_price' => 'Pas de note enregistrée à ce jour',
+            'n_quality' => 'Pas de note enregistrée à ce jour',
+            'n_quantity' => 'Pas de note enregistrée à ce jour',
+            'n_ambiance' => 'Pas de note enregistrée à ce jour',
+            'average' => 'Pas de note enregistrée à ce jour'
+        ];
+
+        if(count($visits) > 0){
+            $avg = [
+                'n_price' => 0,
+                'n_quality' => 0,
+                'n_quantity' => 0,
+                'n_ambiance' => 0,
+                'average' => 0
+            ];
+
+            foreach($visits as $visit){
+                dd($visit->notes->attributesToArray());
+                $avg['n_price'] += $visit->notes->attributesToArray()['n_price'];
+                $avg['n_quality'] += $visit->notes->attributesToArray()['n_quality'];
+                $avg['n_quantity'] += $visit->notes->attributesToArray()['n_quantity'];
+                $avg['n_ambiance'] += $visit->notes->attributesToArray()['n_ambiance'];
+                $avg['average'] += $visit->notes->attributesToArray()['average'];
+            }
+
+            foreach($avg as $n_type => $note){
+                $avg[$n_type] /= count($visits);
+            }
+
         }
 
+        return ($avg);
 
-        return (array_sum($avgNotes) / count($avgNotes));
     }
 
 }

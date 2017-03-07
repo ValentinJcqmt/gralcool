@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $michel = factory(App\User::class)->create(['name' => 'Michel']);
-        $edouard = factory(App\User::class)->create(['name' => 'Edouard']);
+        $michel = factory(App\User::class)->create(['name' => 'Michel', 'password' => 'azerty']);
+        $edouard = factory(App\User::class)->create(['name' => 'Edouard', 'password' => 'azerty']);
 
         $virtue1 = factory(App\Virtue::class)->create(['name' => 'Confortable']);
         $virtue2 = factory(App\Virtue::class)->create(['name' => 'Spacieux']);

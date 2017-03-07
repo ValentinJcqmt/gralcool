@@ -11,10 +11,13 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
 
     return view('home');
 });
+
 
 Route::get('/user', function () {
     return view('user');
@@ -36,10 +39,14 @@ Route::get('/visits/add', function () {
     return view('addVisit');
 });
 
-Route::get('/lieux', 'PlaceController@getNoteFromPlaces');
+Route::get('/lieux', 'PlaceController@getAllPlaces');
 
 Route::get('/lieux/{id}', 'PlaceController@getPlace');
 
 Route::get('/lieux/add', function () {
     return view('addPlace');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

@@ -54,12 +54,18 @@ $factory->define(App\Visit::class, function (Faker\Generator $faker) use ($facto
 //Note Factory
 $factory->define(App\Note::class, function (Faker\Generator $faker) use ($factory) {
 
+    $n_price = $faker->randomFloat(1, 0, 20);
+    $n_quality = $faker->randomFloat(1, 0, 20);
+    $n_quantity = $faker->randomFloat(1, 0, 20);
+    $n_ambiance = $faker->randomFloat(1, 0, 20);
+
     return [
         'visit_id' => factory(App\Visit::class)->create()->id,
-        'n_price' => $faker->randomFloat(1, 0, 20),
-        'n_quantity' => $faker->randomFloat(1, 0, 20),
-        'n_quality' => $faker->randomFloat(1, 0, 20),
-        'n_ambient' => $faker->randomFloat(1, 0, 20),
+        'n_price' => $n_price,
+        'n_quantity' => $n_quantity,
+        'n_quality' => $n_quality,
+        'n_ambiance' => $n_ambiance,
+        'average' => array_sum([$n_price, $n_quantity, $n_quality, $n_ambiance])/4
     ];
 });
 
