@@ -1,33 +1,28 @@
 <?php
 
 use App\User;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PlaceTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
+    use WithoutMiddleware;
 
-//$place = \App\Place::first();
-//
-//$this->assertEquals(8.3, $place->getAverageNote());
     /**
-     * Fake data and test the average note of a place.
      *
-     * @return void
      */
-    public function testAverageNote()
-    {
-        $place = factory(App\Place::class)->create();
+    public function setUp(){
+        parent::setUp();
 
-        $v1 = factory(App\Visit::class)->create([
-            'place_id' => $place->id
+        $this->place = factory(App\Place::class)->create();
+
+        $this->v1 = factory(App\Visit::class)->create([
+            'place_id' => $this->place->id
         ]);
 
-        $n1 = factory(App\Note::class)->create([
-            'visit_id' => $v1->id,
+        $this->n1 = factory(App\Note::class)->create([
+            'visit_id' => $this->v1->id,
             'n_price' => 5.8,
             'n_quality' => 13.6,
             'n_quantity' => 18.4,
@@ -36,26 +31,75 @@ class PlaceTest extends TestCase
         ]);
 
 
-        $v2 = factory(App\Visit::class)->create([
-            'place_id' => $place->id
+        $this->v2 = factory(App\Visit::class)->create([
+            'place_id' => $this->place->id
         ]);
 
 
-        $n2 = factory(App\Note::class)->create([
-            'visit_id' => $v2->id,
+        $this->n2 = factory(App\Note::class)->create([
+            'visit_id' => $this->v2->id,
             'n_price' => 6.2,
             'n_quality' => 13.8,
             'n_quantity' => 16.4,
             'n_ambiance' => 13.7,
             'average' => 10.3
         ]);
+    }
 
-        $this->assertEquals(6.0, $place->getAverageNotes()['n_price']);
-        $this->assertEquals(13.7, $place->getAverageNotes()['n_quality']);
-        $this->assertEquals(17.4, $place->getAverageNotes()['n_quantity']);
-        $this->assertEquals(13.6, $place->getAverageNotes()['n_ambiance']);
-        $this->assertEquals(10.0, $place->getAverageNotes()['average']);
+    /**
+     * Test the average notes of a place from all his visits.
+     */
+    public function testAverageNotes()
+    {
 
+        $this->assertEquals(6.0, $this->place->getAverageNotes()['n_price']);
+        $this->assertEquals(13.7, $this->place->getAverageNotes()['n_quality']);
+        $this->assertEquals(17.4, $this->place->getAverageNotes()['n_quantity']);
+        $this->assertEquals(13.6, $this->place->getAverageNotes()['n_ambiance']);
+        $this->assertEquals(10.0, $this->place->getAverageNotes()['average']);
+
+    }
+
+    /**
+     * Test adding a new place and the redirection that follows
+     *
+     * @return Int
+     */
+    public function testAddNewPlace(){
+
+        $this->visit('/places/add')
+             ->assertResponseOk()
+             ->type('Machin', 'name')
+             ->press('Enregistrer');
+
+        $this->seeInDatabase('places', ['name' => 'Machin']);
+
+        $newPlaceId = \App\Place::where('name', '=', 'Machin')->get()->first()->attributesToArray()['id'];
+
+        $this->seePageIs('/places/'.$newPlaceId);
+
+        return $newPlaceId;
+    }
+
+    /**
+     * Test edition of a place previously added
+     *
+     * @depends testAddNewPlace
+     */
+    public function testEditPlace($id){
+        $this->visit('/places/'.$id)
+             ->see('Machin')
+             ->press('Modifier')
+             ->seePageIs('/places/'.$id.'/edit')
+             ->type('Machin2', 'name')
+             ->type(6.333, 'lng')
+             ->type(3.333, 'lat')
+             ->press('Enregistrer')
+             ->assertResponseOk()
+             ->seePageIs('/places/'.$id)
+             ->see('Machin2')
+             ->see(6.333)
+             ->see(3.333);
     }
 
 }

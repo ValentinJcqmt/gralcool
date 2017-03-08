@@ -53,16 +53,12 @@ class Place extends Model
         ];
 
         if(count($visits) > 0){
-            $avg = [
-                'n_price' => 0,
-                'n_quality' => 0,
-                'n_quantity' => 0,
-                'n_ambiance' => 0,
-                'average' => 0
-            ];
+
+            foreach($avg as $n_type => $note){
+                $avg[$n_type] = 0;
+            }
 
             foreach($visits as $visit){
-                dd($visit->notes->attributesToArray());
                 $avg['n_price'] += $visit->notes->attributesToArray()['n_price'];
                 $avg['n_quality'] += $visit->notes->attributesToArray()['n_quality'];
                 $avg['n_quantity'] += $visit->notes->attributesToArray()['n_quantity'];

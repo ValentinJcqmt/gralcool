@@ -16,6 +16,7 @@ class CreateVirtuesTable extends Migration
         Schema::create('virtues', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->boolean('positive');
             $table->timestamps();
         });
     }

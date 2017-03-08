@@ -19,7 +19,7 @@ class Virtue extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name', 'positive'
     ];
 
     protected $guarded = array('id');

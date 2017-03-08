@@ -16,11 +16,11 @@ class CreatePlaceUserVirtuesTable extends Migration
         Schema::create('place_user_virtues', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+//            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('place_id')->unsigned();
-            $table->foreign('place_id')->references('id')->on('places');
+//            $table->foreign('place_id')->references('id')->on('places');
             $table->integer('virtue_id')->unsigned();
-            $table->foreign('virtue_id')->references('id')->on('virtues');
+//            $table->foreign('virtue_id')->references('id')->on('virtues');
             $table->timestamps();
         });
     }

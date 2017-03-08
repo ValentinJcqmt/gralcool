@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\PlaceType::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->name,
+        'name' => $faker->name
     ];
 });
 
@@ -35,7 +35,7 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 
     return [
         'name' => $faker->company,
-        'type_id' => factory(App\PlaceType::class)->create()->id,
+        'type_id' => $faker->randomNumber(),
         'lat' => $faker->latitude,
         'lng' => $faker->longitude,
     ];
@@ -45,8 +45,8 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 $factory->define(App\Visit::class, function (Faker\Generator $faker) use ($factory) {
 
     return [
-        'user_id' => factory(App\User::class)->create()->id,
-        'place_id' => factory(App\Place::class)->create()->id,
+        'user_id' => $faker->randomNumber(),
+        'place_id' => $faker->randomNumber(),
         'date' => $faker->year.'-'.$faker->month.'-'.$faker->dayOfMonth,
     ];
 });
@@ -60,7 +60,7 @@ $factory->define(App\Note::class, function (Faker\Generator $faker) use ($factor
     $n_ambiance = $faker->randomFloat(1, 0, 20);
 
     return [
-        'visit_id' => factory(App\Visit::class)->create()->id,
+        //'visit_id' => factory(App\Visit::class)->create()->id,
         'n_price' => $n_price,
         'n_quantity' => $n_quantity,
         'n_quality' => $n_quality,
@@ -75,6 +75,7 @@ $factory->define(App\Virtue::class, function (Faker\Generator $faker) use ($fact
 
     return [
         'name' => $faker->word,
+        'positive' => $faker->boolean()
     ];
 });
 
@@ -82,9 +83,9 @@ $factory->define(App\Virtue::class, function (Faker\Generator $faker) use ($fact
 $factory->define(App\PlaceUserVirtue::class, function (Faker\Generator $faker) use ($factory) {
 
     return [
-        'virtue_id' => factory(App\Virtue::class)->create()->id,
-        'place_id' => factory(App\Place::class)->create()->id,
-        'user_id' => factory(App\User::class)->create()->id,
+        //'virtue_id' => factory(App\Virtue::class)->create()->id,
+        //'place_id' => factory(App\Place::class)->create()->id,
+        //'user_id' => factory(App\User::class)->create()->id,
     ];
 });
 

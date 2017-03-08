@@ -13,40 +13,59 @@
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
+Auth::routes();
 
+
+Route::get('/', function () {
     return view('home');
-});
+})->name('home');
+
+
+// Places's Routes
+Route::get('/places', 'PlaceController@getAllPlaces')->name('places');
+
+
+Route::get('/places/add', function () {
+    return view('addPlace');
+})->name('addPlace');
+Route::post('/places/add', 'PlaceController@addNewPlace')->name('savePlace');
+
+Route::get('/places/{id}/edit', 'PlaceController@editPlace')->name('editPlace');
+Route::post('/places/{id}/edit', 'PlaceController@saveEditPlace')->name('saveEditPlace');
+
+Route::get('/places/{id}', 'PlaceController@getPlace')->name('onePlace');
+
+
+
+
 
 
 Route::get('/user', function () {
     return view('user');
-});
+})->name('user');
+
 
 Route::get('/user/{id}', function ($id) {
     return view('user', ['id' => $id]);
-});
+})->name('oneUser');
+
 
 Route::get('/note', function () {
     return view('note');
-});
+})->name('note');
+
 
 Route::get('/visits', function () {
     return view('visit');
-});
+})->name('visits');
+
 
 Route::get('/visits/add', function () {
     return view('addVisit');
-});
+})->name('addVisit');
 
-Route::get('/lieux', 'PlaceController@getAllPlaces');
 
-Route::get('/lieux/{id}', 'PlaceController@getPlace');
 
-Route::get('/lieux/add', function () {
-    return view('addPlace');
-});
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index');

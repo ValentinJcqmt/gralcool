@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
         $michel = factory(App\User::class)->create(['name' => 'Michel', 'password' => 'azerty']);
         $edouard = factory(App\User::class)->create(['name' => 'Edouard', 'password' => 'azerty']);
 
-        $virtue1 = factory(App\Virtue::class)->create(['name' => 'Confortable']);
-        $virtue2 = factory(App\Virtue::class)->create(['name' => 'Spacieux']);
+        $virtue1 = factory(App\Virtue::class)->create(['name' => 'Confortable', 'positive' => true]);
+        $virtue2 = factory(App\Virtue::class)->create(['name' => 'Mal-odorant', 'positive' => false]);
 
         $placeType1 = factory(App\PlaceType::class)->create(['name' => 'FastFood']);
         $placeType2 = factory(App\PlaceType::class)->create(['name' => 'Bar']);
 
         $place1 = factory(App\Place::class)->create(['type_id' => $placeType1->id]);
         $place2 = factory(App\Place::class)->create(['type_id' => $placeType2->id]);
+        $place3 = factory(App\Place::class)->create(['type_id' => $placeType1->id]);
 
         $visit1 = factory(App\Visit::class)->create(['user_id' => $michel->id, 'place_id' => $place1->id]);
         $visit2 = factory(App\Visit::class)->create(['user_id' => $michel->id, 'place_id' => $place2->id]);
