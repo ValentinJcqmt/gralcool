@@ -35,7 +35,7 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 
     return [
         'name' => $faker->company,
-        'type_id' => $faker->randomNumber(),
+        'type_id' => $faker->numberBetween(1, 5),
         'lat' => $faker->latitude,
         'lng' => $faker->longitude,
     ];

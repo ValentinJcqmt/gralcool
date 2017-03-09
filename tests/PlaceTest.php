@@ -9,9 +9,6 @@ class PlaceTest extends TestCase
     use DatabaseTransactions;
     use WithoutMiddleware;
 
-    /**
-     *
-     */
     public function setUp(){
         parent::setUp();
 
@@ -62,10 +59,8 @@ class PlaceTest extends TestCase
 
     /**
      * Test adding a new place and the redirection that follows
-     *
-     * @return Int
      */
-    public function testAddNewPlace(){
+    public function testAddAndEditNewPlace(){
 
         $this->visit('/places/add')
              ->assertResponseOk()
@@ -78,28 +73,18 @@ class PlaceTest extends TestCase
 
         $this->seePageIs('/places/'.$newPlaceId);
 
-        return $newPlaceId;
-    }
-
-    /**
-     * Test edition of a place previously added
-     *
-     * @depends testAddNewPlace
-     */
-    public function testEditPlace($id){
-        $this->visit('/places/'.$id)
-             ->see('Machin')
-             ->press('Modifier')
-             ->seePageIs('/places/'.$id.'/edit')
-             ->type('Machin2', 'name')
-             ->type(6.333, 'lng')
-             ->type(3.333, 'lat')
-             ->press('Enregistrer')
-             ->assertResponseOk()
-             ->seePageIs('/places/'.$id)
-             ->see('Machin2')
-             ->see(6.333)
-             ->see(3.333);
+        $this->see('Machin')
+            ->click('Modifier')
+            ->seePageIs('/places/'.$newPlaceId.'/edit')
+            ->type('Machin2', 'name')
+            ->type(6.333, 'lng')
+            ->type(3.333, 'lat')
+            ->press('Enregistrer')
+            ->assertResponseOk()
+            ->seePageIs('/places/'.$newPlaceId)
+            ->see('Machin2')
+            ->see(6.333)
+            ->see(3.333);
     }
 
 }

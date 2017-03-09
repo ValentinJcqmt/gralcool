@@ -25,10 +25,8 @@ Route::get('/', function () {
 Route::get('/places', 'PlaceController@getAllPlaces')->name('places');
 
 
-Route::get('/places/add', function () {
-    return view('addPlace');
-})->name('addPlace');
-Route::post('/places/add', 'PlaceController@addNewPlace')->name('savePlace');
+Route::get('/places/add', 'PlaceController@addNewPlace')->name('addPlace');
+Route::post('/places/add', 'PlaceController@saveNewPlace')->name('savePlace');
 
 Route::get('/places/{id}/edit', 'PlaceController@editPlace')->name('editPlace');
 Route::post('/places/{id}/edit', 'PlaceController@saveEditPlace')->name('saveEditPlace');

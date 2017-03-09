@@ -3,6 +3,7 @@
 @section('content')
 
     Nom: {{$place->name}}<br>
+    Type: {{$place->type}}<br>
     Latitude: {{$place->lat}}<br>
     Longitude: {{$place->lng}}<br>
     Prix: {{$place->getAverageNotes()['n_price']}}<br>

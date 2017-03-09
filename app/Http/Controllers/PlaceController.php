@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Place;
+use App\PlaceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Integer;
@@ -18,14 +19,22 @@ class PlaceController extends Controller
 
     public function getPlace($id){
         $place = Place::find($id);
+        $place->type = PlaceType::find($place->type_id)->name;
 
         return view('place', ['place' => $place]);
     }
 
-    public function addNewPlace(Request $request){
+    public function addNewPlace(){
+        $types = PlaceType::all();
+
+        return view('addPlace', ['types' => $types]);
+    }
+
+    public function saveNewPlace(Request $request){
         $name = $request->get('name');
         $place = factory(Place::class)->create([
-            'name' => $name
+            'name' => $name,
+            'type_id' => $request->get('type')
         ]);
         $place->save();
         $newPlaceId = Place::where('name', '=', $name)->get()->first()->attributesToArray()['id'];
@@ -34,8 +43,9 @@ class PlaceController extends Controller
 
     public function editPlace($id){
         $place = Place::find($id);
+        $types = PlaceType::all();
 
-        return view('editPlace', ['place' => $place]);
+        return view('editPlace', ['place' => $place, 'types' => $types]);
     }
 
     public function saveEditPlace(Request $request){
