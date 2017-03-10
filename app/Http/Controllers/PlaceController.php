@@ -34,7 +34,9 @@ class PlaceController extends Controller
         $name = $request->get('name');
         $place = factory(Place::class)->create([
             'name' => $name,
-            'type_id' => $request->get('type')
+            'type_id' => $request->get('type'),
+            'lat' => floatval($request->get('lat')),
+            'lng' => floatval($request->get('lng'))
         ]);
         $place->save();
         $newPlaceId = Place::where('name', '=', $name)->get()->first()->attributesToArray()['id'];
@@ -56,6 +58,7 @@ class PlaceController extends Controller
         $place->name = $request->get('name');
         $place->lat = $request->get('lat');
         $place->lng = $request->get('lng');
+        $place->type_id = $request->get('type');
 
         $place->save();
 

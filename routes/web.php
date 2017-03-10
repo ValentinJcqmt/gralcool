@@ -16,23 +16,36 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 
+//Home Route
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
 
-// Places's Routes
-Route::get('/places', 'PlaceController@getAllPlaces')->name('places');
+// Places Routes
+Route::get('/places', 'PlaceController@getAllPlaces')->name('places')->middleware('auth');
 
 
-Route::get('/places/add', 'PlaceController@addNewPlace')->name('addPlace');
-Route::post('/places/add', 'PlaceController@saveNewPlace')->name('savePlace');
+Route::get('/places/add', 'PlaceController@addNewPlace')->name('addPlace')->middleware('auth');
+Route::post('/places/add', 'PlaceController@saveNewPlace')->name('savePlace')->middleware('auth');
 
-Route::get('/places/{id}/edit', 'PlaceController@editPlace')->name('editPlace');
-Route::post('/places/{id}/edit', 'PlaceController@saveEditPlace')->name('saveEditPlace');
+Route::get('/places/{id}/edit', 'PlaceController@editPlace')->name('editPlace')->middleware('auth');
+Route::post('/places/{id}/edit', 'PlaceController@saveEditPlace')->name('saveEditPlace')->middleware('auth');
 
-Route::get('/places/{id}', 'PlaceController@getPlace')->name('onePlace');
+Route::get('/places/{id}', 'PlaceController@getPlace')->name('onePlace')->middleware('auth');
 
+
+
+
+//Visits Routes
+Route::get('/visits', function () {
+
+    return(Auth::user()->id);
+})->name('visits')->middleware('auth');
+
+Route::get('/visits/add', function () {
+    return view('addVisit');
+})->name('addVisit')->middleware('auth');
 
 
 
@@ -52,15 +65,6 @@ Route::get('/note', function () {
     return view('note');
 })->name('note');
 
-
-Route::get('/visits', function () {
-    return view('visit');
-})->name('visits');
-
-
-Route::get('/visits/add', function () {
-    return view('addVisit');
-})->name('addVisit');
 
 
 

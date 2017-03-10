@@ -65,6 +65,9 @@ class PlaceTest extends TestCase
         $this->visit('/places/add')
              ->assertResponseOk()
              ->type('Machin', 'name')
+             ->type(9.6, 'lat')
+             ->type(8.3, 'lng')
+             ->select(1, 'type')
              ->press('Enregistrer');
 
         $this->seeInDatabase('places', ['name' => 'Machin']);
@@ -74,17 +77,22 @@ class PlaceTest extends TestCase
         $this->seePageIs('/places/'.$newPlaceId);
 
         $this->see('Machin')
-            ->click('Modifier')
-            ->seePageIs('/places/'.$newPlaceId.'/edit')
-            ->type('Machin2', 'name')
-            ->type(6.333, 'lng')
-            ->type(3.333, 'lat')
-            ->press('Enregistrer')
-            ->assertResponseOk()
-            ->seePageIs('/places/'.$newPlaceId)
-            ->see('Machin2')
-            ->see(6.333)
-            ->see(3.333);
+             ->see(9.6)
+             ->see(8.3)
+             ->see('Restaurant')
+             ->click('Modifier')
+             ->seePageIs('/places/'.$newPlaceId.'/edit')
+             ->type('Machin2', 'name')
+             ->type(6.333, 'lng')
+             ->type(3.333, 'lat')
+             ->select(3, 'type')
+             ->press('Enregistrer')
+             ->assertResponseOk()
+             ->seePageIs('/places/'.$newPlaceId)
+             ->see('Machin2')
+             ->see(6.333)
+             ->see(3.333)
+             ->see('Kebab');
     }
 
 }
