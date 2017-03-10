@@ -38,10 +38,7 @@ Route::get('/places/{id}', 'PlaceController@getPlace')->name('onePlace')->middle
 
 
 //Visits Routes
-Route::get('/visits', function () {
-
-    return(Auth::user()->id);
-})->name('visits')->middleware('auth');
+Route::get('/visits', 'VisitController@getVisitsForUser')->name('visits')->middleware('auth'); //TODO create controller, tests and function
 
 Route::get('/visits/add', function () {
     return view('addVisit');
