@@ -35,7 +35,7 @@ $factory->define(App\Place::class, function (Faker\Generator $faker) use ($facto
 
     return [
         'name' => $faker->company,
-        'type_id' => $faker->numberBetween(1, 5),
+        'type_id' => $faker->numberBetween(0, 4),
         'lat' => $faker->latitude,
         'lng' => $faker->longitude,
     ];
@@ -48,6 +48,7 @@ $factory->define(App\Visit::class, function (Faker\Generator $faker) use ($facto
         'user_id' => $faker->randomNumber(),
         'place_id' => $faker->randomNumber(),
         'date' => $faker->year.'-'.$faker->month.'-'.$faker->dayOfMonth,
+        'noted' => false
     ];
 });
 
@@ -65,7 +66,7 @@ $factory->define(App\Note::class, function (Faker\Generator $faker) use ($factor
         'n_quantity' => $n_quantity,
         'n_quality' => $n_quality,
         'n_ambiance' => $n_ambiance,
-        'average' => array_sum([$n_price, $n_quantity, $n_quality, $n_ambiance])/4
+        'average' => round(array_sum([$n_price, $n_quantity, $n_quality, $n_ambiance])/4, 1)
     ];
 });
 

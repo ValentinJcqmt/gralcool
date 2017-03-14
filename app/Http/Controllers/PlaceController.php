@@ -14,25 +14,25 @@ class PlaceController extends Controller
     public function getAllPlaces(){
         $places = Place::all();
 
-        return view('places', ['places' => $places]);
+        return view('places.places', ['places' => $places]);
     }
 
     public function getPlace($id){
         $place = Place::find($id);
         $place->type = PlaceType::find($place->type_id)->name;
 
-        return view('place', ['place' => $place]);
+        return view('places.place', ['place' => $place]);
     }
 
     public function addNewPlace(){
         $types = PlaceType::all();
 
-        return view('addPlace', ['types' => $types]);
+        return view('places.addPlace', ['types' => $types]);
     }
 
     public function saveNewPlace(Request $request){
         $name = $request->get('name');
-        $place = factory(Place::class)->create([
+        $place = new Place([
             'name' => $name,
             'type_id' => $request->get('type'),
             'lat' => floatval($request->get('lat')),
@@ -47,7 +47,7 @@ class PlaceController extends Controller
         $place = Place::find($id);
         $types = PlaceType::all();
 
-        return view('editPlace', ['place' => $place, 'types' => $types]);
+        return view('places.editPlace', ['place' => $place, 'types' => $types]);
     }
 
     public function saveEditPlace(Request $request){

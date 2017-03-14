@@ -27,7 +27,7 @@ class Visit extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'place_id', 'date',
+        'user_id', 'place_id', 'date', 'noted'
     ];
 
     protected $guarded = array('id');

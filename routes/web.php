@@ -17,9 +17,7 @@ Auth::routes();
 
 
 //Home Route
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 // Places Routes
@@ -38,11 +36,11 @@ Route::get('/places/{id}', 'PlaceController@getPlace')->name('onePlace')->middle
 
 
 //Visits Routes
-Route::get('/visits', 'VisitController@getVisitsForUser')->name('visits')->middleware('auth'); //TODO create controller, tests and function
+Route::get('/visits', 'VisitController@addNotesFromUserVisits')->name('visits')->middleware('auth');
+Route::post('/visits', 'VisitController@saveNoteFromVisit')->name('saveNote')->middleware('auth');
 
-Route::get('/visits/add', function () {
-    return view('addVisit');
-})->name('addVisit')->middleware('auth');
+Route::get('/visits/add', 'VisitController@addNewVisit')->name('addVisit')->middleware('auth');
+Route::post('/visits/add', 'VisitController@saveNewVisit')->name('saveVisit')->middleware('auth');
 
 
 
@@ -61,10 +59,6 @@ Route::get('/user/{id}', function ($id) {
 Route::get('/note', function () {
     return view('note');
 })->name('note');
-
-
-
-
 
 
 Route::get('/home', 'HomeController@index');

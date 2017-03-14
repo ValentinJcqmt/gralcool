@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $missingNotes = app('App\Http\Controllers\VisitController')->getUnnotedVisitsFromUser(Auth::user()->id);
+        $plurial = '';
+        if(count($missingNotes) > 1) $plurial = 's';
+        return view('home', ['missingNotes' => $missingNotes, 'plurial' => $plurial]);
     }
 }

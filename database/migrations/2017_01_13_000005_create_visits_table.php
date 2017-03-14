@@ -20,6 +20,7 @@ class CreateVisitsTable extends Migration
             $table->integer('place_id')->unsigned();
 //            $table->foreign('place_id')->references('id')->on('places');
             $table->date('date');
+            $table->boolean('noted');
             $table->timestamps();
         });
     }
